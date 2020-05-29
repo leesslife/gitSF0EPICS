@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>vr sphere example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <script src="/js/three.js"></script>
+    <script src="/mxreality.js/build/mxreality.js"></script>
+    <script src="/app/bower_components/angular/angular.min.js"></script>
+    <!-- <script type="text/javascript" src="/fonts/helvetiker_regular.typeface.json"></script>
+    <script type="text/javascript" src="/fonts/helvetiker_bold.typeface.json"></script>
+    <script type="text/javascript" src="/fonts/bitstream_vera_sans_mono_roman.typeface.json"></script> -->
+    <style type="text/css">
+
+        /*#example {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left:0px;
+            top:0px;
+            overflow: hidden;
+        }*/
+    </style>
+</head>
+<body>
+<div id="example"></div>
+<script>
+    window.onload=function () {
+        init();
+    }
+    function init() {
+        var myDate = new Date();
+        var  scene, renderer;
+        var container;
+        renderer = new THREE.WebGLRenderer();
+        container = document.getElementById('example');
+        container.appendChild(renderer.domElement);
+
+        scene = new THREE.Scene();
+
+        var vr=new VR(scene,renderer,container,{'fov':90},{"x":0.5,"y": 0,"z": 0});
+
+
+            
+        if(!AVR.isCrossScreen()) {
+            vr.useGyroscope = false;
+        }
+        vr.loadProgressManager.onLoad=function () {
+          vr.VRObject.getObjectByName("__mxrealityDefault").visible = true;
+
+            vr.VRObject.getObjectByName("__mxrealityDefault").visible = true;
+            vr.controls.enable=true;
+        }
+        vr.loadProgressManager.onProgress=function () {
+            // console.log("onProgress")
+        }
+        vr.loadProgressManager.onError=function () {
+            // console.log("onError")
+        }
+        vr.init(function () {
+            var mat = new THREE.MeshBasicMaterial({  // 材质
+            color: 0x60f60f,
+            wireframe:true
+            });
+            var gem = new THREE.BoxGeometry(0.2,0.2,0.2,4,4,4);  // 几何结构
+            var obj = new THREE.Mesh(gem, mat); 
+                obj.position.x=0;
+                obj.position.y=0.3;
+                obj.position.z=-0;
+            scene.add(obj);
+           // var axes = new THREE.AxesHelper(20);
+           // scene.add(axes);
+           // var loader = new THREE.FontLoader();
+            // textoption={
+            //     size: 0.5,
+            //         height: 0.2,
+            //         weight:  "normal",
+            //         font: "helvetiker",
+            //         bevelThickness:0.2,
+            //         bevelSize: 0.5,
+            //         bevelSegments:0.3,
+            //         bevelEnabled: true,
+            //         curveSegments:0.2,
+            //         steps:0.01
+            // };
+            // var mat = new THREE.MeshBasicMaterial({  // 材质
+            // color: 0x60f60f
+         
+            // });
+            // var text1 = new THREE.TextGeometry("中控室",textoption);
+            // text1obj=THREE.Mesh(text1,mat);
+            // text1obj.position.z=0.4
+            // text1obj.position.y=0.2
+            // screne.add(text1obj) 
+            var mat = new THREE.MeshBasicMaterial({
+                // alphaMap: 0x60f60f,
+                color: 0x00003f
+                
+            });
+        var text = new THREE.FontLoader().load('fonts/helvetiker_regular.typeface.json', function(text) {
+            var gem = new THREE.TextGeometry('TMSR SF0', {
+                size: 0.03, //字号大小，一般为大写字母的高度
+                height: 0.01, //文字的厚度
+                weight: 'normal', //值为'normal'或'bold'，表示是否加粗
+                font: text, //字体，默认是'helvetiker'，需对应引用的字体文件
+                style: 'normal', //值为'normal'或'italics'，表示是否斜体
+                bevelThickness: 0.00, //倒角厚度
+                bevelSize: 0.0, //倒角宽度
+                curveSegments: 0.03,//弧线分段数，使得文字的曲线更加光滑
+                bevelEnabled: true, //布尔值，是否使用倒角，意为在边缘处斜切
+            });
+            gem.center();
+            
+            var textObj = new THREE.Mesh(gem, mat);
+                textObj.position.x=0.1
+                textObj.position.y=0.32
+                textObj.position.z=0
+                textObj.rotation.x=0
+                textObj.rotation.y=14.14
+                textObj.rotation.z=0               
+            // textObj.castShadow = true;
+            scene.add(textObj);
+            var gem1 = new THREE.TextGeometry(myDate.toLocaleDateString(), {
+                size: 0.02, //字号大小，一般为大写字母的高度
+                height: 0.01, //文字的厚度
+                weight: 'normal', //值为'normal'或'bold'，表示是否加粗
+                font: text, //字体，默认是'helvetiker'，需对应引用的字体文件
+                style: 'normal', //值为'normal'或'italics'，表示是否斜体
+                bevelThickness: 0.00, //倒角厚度
+                bevelSize: 0.0, //倒角宽度
+                curveSegments: 0.03,//弧线分段数，使得文字的曲线更加光滑
+                bevelEnabled: true, //布尔值，是否使用倒角，意为在边缘处斜切
+            });
+            gem1.center();
+    
+            var text1Obj = new THREE.Mesh(gem1, mat);
+                text1Obj.position.x=0.1
+                text1Obj.position.y=0.24
+                text1Obj.position.z=0
+                text1Obj.rotation.x=0
+                text1Obj.rotation.y=14.14
+                text1Obj.rotation.z=0               
+            // textObj.castShadow = true;
+            scene.add(text1Obj);
+
+            var gem2 = new THREE.TextGeometry('Heat Leakage \n Experiment', {
+                size: 0.02, //字号大小，一般为大写字母的高度
+                height: 0.00, //文字的厚度
+                weight: 'normal', //值为'normal'或'bold'，表示是否加粗
+                font: text, //字体，默认是'helvetiker'，需对应引用的字体文件
+                style: 'normal', //值为'normal'或'italics'，表示是否斜体
+                bevelThickness: 0.00, //倒角厚度
+                bevelSize: 0.0, //倒角宽度
+                curveSegments: 0.03,//弧线分段数，使得文字的曲线更加光滑
+                bevelEnabled: true, //布尔值，是否使用倒角，意为在边缘处斜切
+            });
+            gem2.center();
+     
+            var text2Obj = new THREE.Mesh(gem2, mat);
+                text2Obj.position.x=0
+                text2Obj.position.y=0.32
+                text2Obj.position.z=-0.1
+                text2Obj.rotation.x=0
+                text2Obj.rotation.y=15.71
+                text2Obj.rotation.z=0               
+            // textObj.castShadow = true;
+            scene.add(text2Obj);
+
+            var gem3 = new THREE.TextGeometry('EOD:Tao LiangHai ', {
+                size: 0.01, //字号大小，一般为大写字母的高度
+                height: 0, //文字的厚度
+                weight: 'normal', //值为'normal'或'bold'，表示是否加粗
+                font: text, //字体，默认是'helvetiker'，需对应引用的字体文件
+                style: 'normal', //值为'normal'或'italics'，表示是否斜体
+                bevelThickness: 0.00, //倒角厚度
+                bevelSize: 0.0, //倒角宽度
+                curveSegments: 0.03,//弧线分段数，使得文字的曲线更加光滑
+                bevelEnabled: true, //布尔值，是否使用倒角，意为在边缘处斜切
+            });
+            gem3.center();
+            
+            var text3Obj = new THREE.Mesh(gem3, mat);
+                text3Obj.position.x=0
+                text3Obj.position.y=0.22
+                text3Obj.position.z=-0.1
+                text3Obj.rotation.x=0
+                text3Obj.rotation.y=15.71
+                text3Obj.rotation.z=0               
+            // textObj.castShadow = true;
+            scene.add(text3Obj);
+           // var spotLight = new THREE.PointLight(0x40f040,200,10,2);
+            //spotLight.position.set(0,0.3,0);
+            // spotLight.angle=Math.PI/5;
+            // spotLight.penumbra = 0.05;
+				// spotLight.decay = 10;
+                // spotLight.distance = 0.2;
+                // spotLight.castShadow=false;
+           //scene.add(spotLight);
+             //var spotLightHelper = new THREE.SpotLightHelper( spotLight );
+           // scene.add( spotLightHelper );
+            // new TWEEN.Tween(textObj.rotation).to({y: Math.PI * 2}, 2000).repeat(Infinity).yoyo(true).start();
+        });    
+
+ 
+        });
+        
+        vr.controls.autoRotateSpeed=1.2;
+        
+        
+        vr.playPanorama('/images/puydesancy.jpg');
+        vr.controls.autoRotate=true;
+        vr.controls.gyroFreeze();
+
+    }
+
+    function createMesh(geom) {
+
+// assign two materials
+//            var meshMaterial = new THREE.MeshLambertMaterial({color: 0xff5555});
+//            var meshMaterial = new THREE.MeshNormalMaterial();
+var meshMaterial = new THREE.MeshPhongMaterial({
+    specular: 0xffffff,
+    color: 0xeeffff,
+    shininess: 100,
+    metal: true
+});
+//            meshMaterial.side=THREE.DoubleSide;
+// create a multimaterial
+var plane = THREE.SceneUtils.createMultiMaterialObject(geom, [meshMaterial]);
+
+return plane;
+}
+</script>
+
+</body>
+</html>

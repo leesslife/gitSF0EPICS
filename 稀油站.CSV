@@ -1,0 +1,12 @@
+﻿PumpOil01:digin,开关量输入状态
+PumpOil01:status,机组运行状态
+PumpOil01:temp,温度
+PumpOil01:start,启动
+PumpOil01:stop,停止
+PumpOil02:digin,开关量输入状态
+PumpOil02:status,机组运行状态
+PumpOil02:temp,温度
+PumpOil02:start,启动
+PumpOil02:stop,停止
+PumpOil01:set-temp,温度设定值
+PumpOil02:set-temp,温度设定值
